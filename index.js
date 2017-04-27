@@ -224,7 +224,7 @@ const Swipeout = React.createClass({
         this._tweenContent('contentPos', btnsLeftWidth);
         this.setState({ contentPos: btnsLeftWidth, openedLeft: true, openedRight: false, swiping: false });
       } else {
-        if (Math.abs(posX) < 2 && Math.abs(posY) < 2 && this.props.onPress) {
+        if (Math.abs(posX) < 2 && Math.abs(posY) < 2 && this.props.onPress && !this.state.openedLeft && !this.state.openedRight) {
           this.props.onPress();
         } else {
           // close swipeout
