@@ -190,6 +190,7 @@ const Swipeout = React.createClass({
 
   _handlePanResponderEnd: function(e: Object, gestureState: Object) {
     var posX = gestureState.dx;
+    var posY = gestureState.dy;
     var contentPos = this.state.contentPos;
     var contentWidth = this.state.contentWidth;
     var btnsLeftWidth = this.state.btnsLeftWidth;
@@ -222,11 +223,14 @@ const Swipeout = React.createClass({
         // open swipeout left
         this._tweenContent('contentPos', btnsLeftWidth);
         this.setState({ contentPos: btnsLeftWidth, openedLeft: true, openedRight: false, swiping: false });
-      }
-      else {
-        // close swipeout
-        this._tweenContent('contentPos', 0);
-        this.setState({ contentPos: 0, openedLeft: false, openedRight: false, swiping: false });
+      } else {
+        if (Math.abs(posX) < 2 && Math.abs(posY) < 2 && this.props.onPress) {
+          this.props.onPress();
+        } else {
+          // close swipeout
+          this._tweenContent('contentPos', 0);
+          this.setState({ contentPos: 0, openedLeft: false, openedRight: false, swiping: false });
+        }
       }
     }
 
