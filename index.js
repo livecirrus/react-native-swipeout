@@ -183,8 +183,11 @@ const Swipeout = React.createClass({
     }
     if (this.state.swiping) {
       //  move content to reveal swipeout
-      if (posX < 0 && this.props.right) this.setState({ contentPos: Math.min(posX, 0) });
-      else if (posX > 0 && this.props.left) this.setState({ contentPos: Math.max(posX, 0) });
+      if (posX < 0 && this.props.right) {
+        this.setState({ contentPos: Math.min(posX, 0) });
+      } else if (posX > 0 && this.props.left) {
+        this.setState({ contentPos: Math.max(posX, 0) });
+      }
     }
   },
 
@@ -231,6 +234,10 @@ const Swipeout = React.createClass({
           this._tweenContent('contentPos', 0);
           this.setState({ contentPos: 0, openedLeft: false, openedRight: false, swiping: false });
         }
+      }
+    } else {
+      if (Math.abs(posX) < 2 && Math.abs(posY) < 2 && this.props.onPress && !this.state.openedLeft && !this.state.openedRight) {
+        this.props.onPress();
       }
     }
 
