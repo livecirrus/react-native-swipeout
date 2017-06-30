@@ -8,13 +8,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   swipeoutBtnTouchable: {
-    flex: 1,
+    flexGrow: 1,
   },
   swipeoutBtn: {
     alignItems: 'center',
     backgroundColor: '#b6bec0',
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     overflow: 'hidden',
   },
   swipeoutBtnText: {
