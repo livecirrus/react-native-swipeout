@@ -6,7 +6,7 @@ import rows from './data';
 import styles from './styles';
 
 import React, {Component} from 'react';
-import {AppRegistry, StyleSheet, ListView, Text, View} from 'react-native';
+import {AppRegistry, StyleSheet, ListView, Text, View, TouchableWithoutFeedback} from 'react-native';
 
 //  example swipout app
 class SwipeoutExample extends Component {
@@ -19,25 +19,35 @@ class SwipeoutExample extends Component {
 
     this.state = {
       dataSource: ds.cloneWithRows(rows),
+      sectionID: null,
+      rowID: null,
     };
   }
 
   _renderRow(rowData: string, sectionID: number, rowID: number) {
     return (
       <Swipeout
+        close={!(this.state.sectionID === sectionID && this.state.rowID === rowID)}
         left={rowData.left}
         right={rowData.right}
         rowID={rowID}
         sectionID={sectionID}
         autoClose={rowData.autoClose}
         backgroundColor={rowData.backgroundColor}
-        close={!rowData.active}
-        onOpen={(sectionID, rowID) => console.log(sectionID, rowID) }
-        scroll={event => console.log('scroll event')}
+        onOpen={(sectionID, rowID) => {
+          this.setState({
+            sectionID,
+            rowID,
+          })
+        }}
+        onClose={() => console.log('===close') }
+        scroll={event => console.log('scroll event') }
       >
-        <View style={styles.li}>
-          <Text style={styles.liText}>{rowData.text}</Text>
-        </View>
+        <TouchableWithoutFeedback onPress={() => console.log('press children')}>
+          <View style={styles.li} >
+            <Text style={styles.liText}>{rowData.text}</Text>
+          </View>
+        </TouchableWithoutFeedback>
       </Swipeout>
     );
   }
